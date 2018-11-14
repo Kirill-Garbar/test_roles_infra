@@ -1,0 +1,6 @@
+---
+- name: Install apache
+  hosts: all
+  become: true
+  tasks:
+    - name: Install apache

@@ -1,0 +1,7 @@
+---
+- name: install nginx
+  hosts: all
+#  tags: reddit-balancer
+  become: true
+  roles:
+   - jdauphant.nginx

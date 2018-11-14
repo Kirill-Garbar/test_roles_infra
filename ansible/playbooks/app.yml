@@ -1,0 +1,13 @@
+---
+- name: Configure Apps
+  hosts: tag_reddit-app
+#  tags: reddit-app
+  become: true
+  roles:
+   - geerlingguy.apache
+  tasks:
+   - name: copy site template
+     template:
+        src: ../templates/index.html.j2
+        dest: /var/www/html/index.html
+        mode: 0644

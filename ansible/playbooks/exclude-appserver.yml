@@ -1,0 +1,8 @@
+---
+- hosts: tag_reddit-balancer
+  tasks:
+    - name: Remove host from load balancing before running update
+      become: yes
+      import_role:
+        name: jdauphant.nginx
+        tasks_from: configuration.yml

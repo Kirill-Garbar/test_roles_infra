@@ -19,8 +19,9 @@ resource "google_compute_firewall" "firewall_nginx" {
     ports    = ["8080"]
   }
 
-  source_tags = ["reddit-balancer"]
-  target_tags   = ["reddit-app"]
+  # source_tags = ["reddit-balancer"]
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["reddit-app", "reddit-balancer"]
 }
 
 resource "google_compute_firewall" "firewall_app" {
@@ -33,5 +34,5 @@ resource "google_compute_firewall" "firewall_app" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["reddit-app"]
+  target_tags   = ["reddit-app", "reddit-balancer"]
 }

@@ -14,5 +14,5 @@ gce.ini
 infra*.json
 tf.log
 jdauphant.nginx
+geerlingguy.apache
 vault.key
-ansible/

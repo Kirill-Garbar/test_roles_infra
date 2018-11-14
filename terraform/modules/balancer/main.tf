@@ -1,6 +1,6 @@
 resource "google_compute_instance" "balancer" {
   name         = "reddit-balancer-${count.index}"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "${var.zone}"
   tags         = ["reddit-balancer"]
   count        = "${var.balancer_count}"  
@@ -26,6 +26,4 @@ resource "google_compute_instance" "balancer" {
     agent       = false
     private_key = "${file("${var.private_key_path}")}"
   }
-
-
 }

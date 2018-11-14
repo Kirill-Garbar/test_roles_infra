@@ -1,0 +1,10 @@
+---
+- name: Configure Balancers
+  hosts: tag_reddit-balancer
+  become: true
+#  tasks:
+#    - include_role:
+#        name: jdauphant.nginx
+#        tasks_from: configuration.yml
+  roles:
+    - jdauphant.nginx
