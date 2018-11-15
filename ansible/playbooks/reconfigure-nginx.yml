@@ -1,0 +1,5 @@
+---
+- import_role:
+    name: jdauphant.nginx
+    tasks_from: configuration.yml
+  delegate_to: "{{ hostvars[balancer_item]['gce_public_ip'] }}"

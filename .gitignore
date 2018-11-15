@@ -9,7 +9,6 @@ appuser
 webprogrammer
 *.retry
 .vscode/
-gce.py
 gce.ini
 infra*.json
 tf.log

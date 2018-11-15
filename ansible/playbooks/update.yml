@@ -1,15 +1,14 @@
 ---
 - hosts: tag_reddit-app
   serial: 1
+  become: true
   pre_tasks:
-    - name: Remove host from load balancing before running update
-      shell: cd .. && ansible-playbook playbooks/exclude-appserver.yml --extra-vars "excluded_host={{ apache_external_ip }}"
-      register: ansible_playbook_result
-      #shell: ls -al > ~/1.txt
-      delegate_to: 127.0.0.1
-    - name: echo results of task
-      debug:
-        msg: " {{ ansible_playbook_result }} "
+    - include_tasks: reconfigure-nginx.yml
+      vars:
+        excluded_host: "{{ hostvars[inventory_hostname]['gce_public_ip'] }}"
+      loop: "{{ groups['tag_reddit-balancer'] }}"
+      loop_control:
+        loop_var: balancer_item
   tasks:
     - name: copy site template
       become: true
@@ -17,11 +16,8 @@
         src: ../templates/index.html.j2
         dest: /var/www/html/index.html
         mode: 0644
-    - name: Add host to LB after update
-      shell: cd .. && ansible-playbook playbooks/exclude-appserver.yml
-      register: ansible_playbook_result
-      #shell: ls -al > ~/1.txt
-      delegate_to: 127.0.0.1
-    - name: echo results of task
-      debug:
-        msg: " {{ ansible_playbook_result }} "
+  post_tasks:
+    - include_tasks: reconfigure-nginx.yml
+      loop: "{{ groups['tag_reddit-balancer'] }}"
+      loop_control:
+        loop_var: balancer_item

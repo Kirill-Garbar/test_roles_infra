@@ -4,9 +4,7 @@ nginx_configs:
         - upstream {{ hostvars[inventory_hostname]['gce_public_ip'] }} {
             ip_hash;
             {% for host in groups['tag_reddit-app'] %}
-                {% if hostvars[host]['gce_public_ip'] != excluded_host | default('0.0.0.0') %}
-                    server {{ hostvars[host]['gce_public_ip'] }}:8080;
-                {% endif %}
+                server {{ hostvars[host]['gce_public_ip'] }}:8080;
             {% endfor %} }
 
 nginx_sites:
